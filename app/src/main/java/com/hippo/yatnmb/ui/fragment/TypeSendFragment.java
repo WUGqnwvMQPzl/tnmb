@@ -95,9 +95,6 @@ import com.hippo.yorozuya.LayoutUtils;
 import com.hippo.yorozuya.Messenger;
 import com.hippo.yorozuya.ResourcesUtils;
 import com.hippo.yorozuya.SimpleHandler;
-import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -182,8 +179,6 @@ public final class TypeSendFragment extends BaseFragment implements View.OnClick
     private NMBRequest mNMBRequest;
 
     private Callback mCallback;
-
-    private IWXAPI mWxApi;
 
     public void setCallback(Callback callback) {
         mCallback = callback;
@@ -441,11 +436,6 @@ public final class TypeSendFragment extends BaseFragment implements View.OnClick
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        if (mWxApi != null) {
-            mWxApi.detach();
-            mWxApi = null;
-        }
     }
 
     /**
@@ -760,17 +750,15 @@ public final class TypeSendFragment extends BaseFragment implements View.OnClick
     }
 
     private void tryGettingCookies() {
+        // FIXME: Change dialog text
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
-                        showRegisterDialog();
+                        showScanQRCodeActivity();
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
-                        showAddCookieDialog();
-                        break;
-                    case DialogInterface.BUTTON_NEUTRAL:
                         doAction();
                         break;
                 }
@@ -779,73 +767,13 @@ public final class TypeSendFragment extends BaseFragment implements View.OnClick
 
         new AlertDialog.Builder(getContext()).setTitle(R.string.no_cookies)
                 .setMessage(R.string.no_cookies_ac)
-                .setPositiveButton(R.string.register, listener)
-                .setNegativeButton(R.string.add_cookies, listener)
-                .setNeutralButton(R.string.i_dont_care, listener).show();
+                .setPositiveButton(R.string.add_cookies, listener)
+                .setNegativeButton(R.string.i_dont_care, listener).show();
     }
 
-    private void showRegisterDialog() {
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0:
-                        // Web
-                        String url = "http://adnmb.com/Member/User/Index/sendRegister.html";
-                        OpenUrlHelper.openUrl(getActivity(), url, false);
-                        break;
-                    case 1:
-                        // WeChat
-                        if (mWxApi == null) {
-                            String appId = "wxe59db8095c5f16de";
-                            mWxApi = WXAPIFactory.createWXAPI(getActivity(), appId);
-                        }
-
-                        WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
-                        req.userName = "gh_f8c1b9909e51";
-                        req.path = "pages/index/index?mode=reg";
-                        req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
-                        mWxApi.sendReq(req);
-                        break;
-                }
-            }
-        };
-
-        new AlertDialog.Builder(getActivity())
-                .setItems(R.array.register_methods, listener)
-                .show();
-    }
-
-    private void showAddCookieDialog() {
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0:
-                        // Scan
-                        Intent intent = new Intent(getActivity(), QRCodeScanActivity.class);
-                        startActivity(intent);
-                        break;
-                    case 1:
-                        // WeChat
-                        if (mWxApi == null) {
-                            String appId = "wxe59db8095c5f16de";
-                            mWxApi = WXAPIFactory.createWXAPI(getActivity(), appId);
-                        }
-
-                        WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
-                        req.userName = "gh_f8c1b9909e51";
-                        req.path = "pages/index/index?mode=cookie";
-                        req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
-                        mWxApi.sendReq(req);
-                        break;
-                }
-            }
-        };
-
-        new AlertDialog.Builder(getActivity())
-                .setItems(R.array.add_cookies, listener)
-                .show();
+    private void showScanQRCodeActivity() {
+        Intent intent = new Intent(getActivity(), QRCodeScanActivity.class);
+        startActivity(intent);
     }
 
     private void showImageDialog() {
@@ -1121,44 +1049,6 @@ public final class TypeSendFragment extends BaseFragment implements View.OnClick
             mImage = null;
 
             Log.d(TAG, "ActionListener onCancel");
-        }
-    }
-
-    private class GetCookieListener implements NMBClient.Callback<Boolean> {
-        @Override
-        public void onSuccess(Boolean result) {
-            if (mProgressDialog != null) {
-                mProgressDialog.dismiss();
-                mProgressDialog = null;
-            }
-            mNMBRequest = null;
-
-            Toast.makeText(getContext(), R.string.got_cookies, Toast.LENGTH_SHORT).show();
-
-            doAction();
-        }
-
-        @Override
-        public void onFailure(Exception e) {
-            if (mProgressDialog != null) {
-                mProgressDialog.dismiss();
-                mProgressDialog = null;
-            }
-            mNMBRequest = null;
-
-            Toast.makeText(getContext(), getString(R.string.cant_get_cookies) + "\n" +
-                    ExceptionUtils.getReadableString(getContext(), e), Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onCancel() {
-            if (mProgressDialog != null) {
-                mProgressDialog.dismiss();
-                mProgressDialog = null;
-            }
-            mNMBRequest = null;
-
-            Log.d(TAG, "GetCookieListener onCancel");
         }
     }
 

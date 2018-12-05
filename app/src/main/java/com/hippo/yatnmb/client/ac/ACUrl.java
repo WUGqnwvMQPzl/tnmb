@@ -51,6 +51,7 @@ public class ACUrl {
 
     public static final String API_REPLY = "/Home/Forum/doReplyThread.html?appid=" + APP_ID;
 
+    // FIXME: No common posts on tnmb
     public static final String API_COMMON_POSTS = "http://nimingban.herokuapp.com/common_posts";
 
     public static final String API_SEARCH = "/Api/search?appid=" + APP_ID;

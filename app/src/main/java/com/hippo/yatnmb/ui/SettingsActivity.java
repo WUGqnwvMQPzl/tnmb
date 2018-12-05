@@ -83,9 +83,6 @@ import com.hippo.yorozuya.LayoutUtils;
 import com.hippo.yorozuya.MathUtils;
 import com.hippo.yorozuya.Messenger;
 import com.hippo.yorozuya.NumberUtils;
-import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -397,8 +394,6 @@ public class SettingsActivity extends PrettyPreferenceActivity
         private int mXuMing;
         private String mXuMingStr;
 
-        private IWXAPI wxApi = null;
-
         @Override
         public void onDestroy() {
             super.onDestroy();
@@ -414,11 +409,6 @@ public class SettingsActivity extends PrettyPreferenceActivity
 
             if (mPopupWindow.isShowing()) {
                 mPopupWindow.dismiss();
-            }
-
-            if (wxApi != null) {
-                wxApi.detach();
-                wxApi = null;
             }
         }
 
@@ -874,39 +864,14 @@ public class SettingsActivity extends PrettyPreferenceActivity
                 }
                 return true;
             } else if (KEY_ADD_COOKIES.equals(key)) {
-                new AlertDialog.Builder(getActivity())
-                        .setItems(R.array.add_cookies, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                switch (which) {
-                                    case 0:
-                                        // Scan
-                                        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) !=
-                                                PackageManager.PERMISSION_GRANTED) {
-                                            ActivityCompat.requestPermissions(getActivity(),
-                                                    new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
-                                        } else {
-                                            Intent intent = new Intent(getActivity(), QRCodeScanActivity.class);
-                                            getActivity().startActivity(intent);
-                                        }
-                                        break;
-                                    case 1:
-                                        // WeChat
-                                        if (wxApi == null) {
-                                            String appId = "wxe59db8095c5f16de";
-                                            wxApi = WXAPIFactory.createWXAPI(getActivity(), appId);
-                                        }
-
-                                        WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
-                                        req.userName = "gh_f8c1b9909e51";
-                                        req.path = "pages/index/index?mode=cookie";
-                                        req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
-                                        wxApi.sendReq(req);
-                                        break;
-                                }
-                            }
-                        })
-                        .show();
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) !=
+                        PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
+                } else {
+                    Intent intent = new Intent(getActivity(), QRCodeScanActivity.class);
+                    getActivity().startActivity(intent);
+                }
                 return true;
             } else if (KEY_SAVE_COOKIES.equals(key)) {
                 mSaveCookies.setEnabled(false);

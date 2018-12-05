@@ -16,7 +16,7 @@
 
 <resources>
 
-    <string name="app_name">匿名版</string>
+    <string name="app_name">備胎島</string>
 
     <string name="drawer_open">打開抽屜</string>
     <string name="drawer_close">關閉抽屜</string>
@@ -134,12 +134,8 @@
 
     <string name="no_cookies">沒有 Cookies</string>
     <string name="no_cookies_ac">似乎你沒有餅乾。要來註冊並獲取餅乾？</string>
-    <string name="register">註冊</string>
     <string name="add_cookies">添加餅乾</string>
     <string name="i_dont_care">我不在意</string>
-    <string name="getting_cookies">獲取餅乾中…</string>
-    <string name="got_cookies">拿到餅乾了！</string>
-    <string name="cant_get_cookies">未獲取餅乾</string>
 
     <string name="em_timeout">超時</string>
     <string name="em_unknown_host">未知主機</string>
@@ -205,19 +201,11 @@
     <string name="share_image">分享圖片</string>
     <string name="cant_save_image">無法保存圖片</string>
 
-    <string name="wx_add_cookie_invalid">無效的返回值</string>
-    <string name="wx_add_cookie_empty">未找到餅乾</string>
-    <string name="wx_add_cookie_succeed">添加餅乾成功！</string>
-    <string name="wx_add_cookie_succeed_multi">已添加第一塊餅乾</string>
-
     <string name="qr_scan_tip">請對準餅乾二維碼</string>
     <string name="qr_scan_pic">從圖片中讀取二維碼</string>
     <string name="qr_scan_processing">處理中…</string>
     <string name="qr_scan_succeed">添加餅乾成功！</string>
     <string name="qr_scan_invalid">無效的餅乾二維碼</string>
-
-    <string name="register_web">網頁</string>
-    <string name="register_wechat">微信</string>
 
     <string name="settings">設置</string>
     <string name="display_settings_title">顯示</string>
@@ -255,8 +243,7 @@
     <string name="main_ac_cookies_summary_forever">理論上來説，你擁有永恆的餅乾</string>
     <string name="main_add_cookies">添加餅乾</string>
     <string name="main_add_cookies_scan">掃碼</string>
-    <string name="main_add_cookies_wechat">微信</string>
-    <string name="main_add_cookies_summary">通過掃碼或微信來添加餅乾</string>
+    <string name="main_add_cookies_summary">通過掃碼來添加餅乾</string>
     <string name="main_add_cookies_denied">不讓用相機就無法掃描</string>
     <string name="main_save_cookies">保存餅乾</string>
     <string name="main_save_cookies_summary">保存餅乾至外置存儲器</string>

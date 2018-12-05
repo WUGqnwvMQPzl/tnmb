@@ -177,11 +177,6 @@
           android:screenOrientation="unspecified"/>
 
         <activity
-            android:name=".wxapi.WXEntryActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
-            android:exported="true"/>
-
-        <activity
             android:name=".ui.BringToForegroundActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"/>
 

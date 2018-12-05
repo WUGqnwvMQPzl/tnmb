@@ -43,8 +43,8 @@ import de.greenrobot.dao.query.LazyList;
 
 public final class DB {
 
-    private static String[] AC_FORUM_ID_ARRAY = {"-1", "4", "20", "11", "30", "32", "40", "35", "56", "110", "15", "19", "106", "17", "98", "102", "75", "97", "89", "96", "81", "111", "14", "12", "90", "99", "87", "64", "5", "93", "101", "6", "103", "2", "23", "72", "3", "25", "107", "24", "22", "70", "38", "86", "51", "10", "28", "108", "45", "34", "29", "16", "100", "13", "55", "39", "31", "37", "33", "18", "112", };
-    private static String[] AC_FORUM_NAME_ARRAY = {"时间线", "综合版1", "欢乐恶搞", "推理(脑洞)", "技术(码农)", "料理(美食<font style='color:#fff'>·汪版</font>)", "喵版(主子)", "音乐(推歌)", "学业(校园)", "社畜<font color=\"red\">New!</font>", "科学(理学)", "小说(连载)", "买买买(剁手)", "绘画涂鸦(二创)", "姐妹1(淑女)", "LGBT", "数码(装机)", "女装(时尚)", "日记(树洞)", "圈内(版务讨论)", "都市怪谈(灵异)", "跑团<font style='color:#f00'>New!</font>", "动画", "漫画", "美漫(小马)", "国漫", "轻小说", "GALGAME", "东方Project", "舰娘", "LoveLive", "VOCALOID", "文学(推书)", "游戏综合版", "暴雪游戏<font color=\"red\">New!</font>", "DNF", "手游<font color=\"red\">New!</font>", "任天堂<font color=\"red\">NS</font>", "Steam", "索尼", "LOL", "DOTA", "精灵宝可梦", "战争雷霆", "坦克战机战舰世界", "Minecraft", "怪物猎人", "辐射4", "卡牌桌游", "音乐游戏", "AC大逃杀", "日本偶像(AKB)", "中国偶像(SNH)", "眼科(Cosplay)", "声优", "模型(手办)", "电影/电视", "军武", "体育", "值班室", "城墙", };
+    private static String[] AC_FORUM_ID_ARRAY = {"-1", "1", "2", "3", "4", "6", "7", "11", "13", "15", "17", "18", "19", "20", "21", "22", "23", "24", "25", "5", };
+    private static String[] AC_FORUM_NAME_ARRAY = {"时间线", "综合", "技术", "二次创作", "动画漫画", "游戏", "欢乐恶搞", "小说", "数码音乐", "都市怪谈", "支援1", "基佬", "姐妹2", "日记", "美食(汪版)", "喵版", "社畜", "车万养老院", "买买买", "值班室", };
 
     private static DaoSession sDaoSession;
 
@@ -153,6 +153,7 @@ public final class DB {
         ACCommonPostDao dao = sDaoSession.getACCommonPostDao();
         dao.deleteAll();
 
+        // FIXME: No common posts on tnmb
         int size = 13;
         String[] names = {
                 "人，是会思考的芦苇", "丧尸图鉴", "壁纸楼", "足控福利", "淡定红茶",

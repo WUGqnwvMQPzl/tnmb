@@ -118,7 +118,7 @@ public class ACSite extends Site {
 
     @Override
     public String getReportForumId() {
-        return "18"; // TODO how to get it ?
+        return "5"; // TODO how to get it ?
     }
 
     public synchronized void setCdnPath(List<ACCdnPath> list) {
