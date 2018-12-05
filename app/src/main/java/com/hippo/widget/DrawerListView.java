@@ -32,7 +32,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.hippo.nimingban.R;
+import com.hippo.yatnmb.R;
 
 public class DrawerListView extends ListView {
 

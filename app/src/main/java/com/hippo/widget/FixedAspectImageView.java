@@ -23,7 +23,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.hippo.nimingban.R;
+import com.hippo.yatnmb.R;
 import com.hippo.yorozuya.MathUtils;
 
 /**

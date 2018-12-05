@@ -23,7 +23,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.hippo.nimingban.R;
+import com.hippo.yatnmb.R;
 
 public class ColorView extends View {
 

@@ -19,7 +19,7 @@ android {
     compileSdkVersion 27
 
     defaultConfig {
-        applicationId "com.hippo.nimingban"
+        applicationId "com.hippo.yatnmb"
         minSdkVersion 14
         targetSdkVersion 27
         versionCode 55

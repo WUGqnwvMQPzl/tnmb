@@ -23,7 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.hippo.nimingban.R;
+import com.hippo.yatnmb.R;
 
 public class ProgressDialogBuilder extends AlertDialog.Builder {
 
