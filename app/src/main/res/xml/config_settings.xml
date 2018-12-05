@@ -94,6 +94,7 @@
         android:title="@string/main_enable_https"
         android:summary="@string/main_enable_https_summary"
         android:defaultValue="true"
+        android:enabled="false"
         android:widgetLayout="@layout/preference_widget_fixed_switch" />
 
     <com.hippo.preference.FixedSwitchPreference

@@ -58,7 +58,7 @@ public class ACUrl {
     public static final String FORUM_ID_TIME_LINE = "-1";
 
     public static String getHost() {
-        return (Settings.getHttpsEnabled() ? "https" : "http") + "://" + DOMAIN;
+        return "https://" + DOMAIN;
     }
 
     public static String getPostListUrl(String forum, int page) {

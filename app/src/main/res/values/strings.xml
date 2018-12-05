@@ -287,7 +287,7 @@
     <string name="main_restore_ignored_post_summary">The posts you ignored will redisplayed</string>
     <string name="main_restore_ignored_post_successfully">Restoring successful</string>
     <string name="main_enable_https">Enable HTTPS connection</string>
-    <string name="main_enable_https_summary">Try to disable this if some connection errors occurred</string>
+    <string name="main_enable_https_summary">HTTPS always enabled on tnmb, and it doesn\'t support HTTP</string>
     <string name="main_analysis">Enable data analysis</string>
     <string name="main_about_analysis">About data analysis</string>
     <string name="main_author">Author</string>
