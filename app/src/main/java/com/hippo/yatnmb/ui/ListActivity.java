@@ -587,7 +587,8 @@ public final class ListActivity extends AbsActivity
         NMBRequest request;
 
         // Check update
-        request = new NMBRequest();
+        // FIXME
+        /* request = new NMBRequest();
         mUpdateRequest = request;
         request.setMethod(NMBClient.METHOD_UPDATE);
         request.setCallback(new NMBClient.Callback<UpdateStatus>() {
@@ -610,7 +611,7 @@ public final class ListActivity extends AbsActivity
                 mUpdateRequest = null;
             }
         });
-        mNMBClient.execute(request);
+        mNMBClient.execute(request); */
 
         // Get common post
         request = new NMBRequest();

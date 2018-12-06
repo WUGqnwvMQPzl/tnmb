@@ -750,7 +750,6 @@ public final class TypeSendFragment extends BaseFragment implements View.OnClick
     }
 
     private void tryGettingCookies() {
-        // FIXME: Change dialog text
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
