@@ -43,6 +43,7 @@ import android.text.style.URLSpan;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,7 @@ import com.hippo.yatnmb.client.data.Site;
 import com.hippo.yatnmb.ui.GalleryActivity2;
 import com.hippo.yatnmb.ui.PostActivity;
 import com.hippo.yatnmb.util.OpenUrlHelper;
+import com.hippo.yatnmb.util.PostIgnoreUtils;
 import com.hippo.yatnmb.util.ReadableTime;
 import com.hippo.yatnmb.util.Settings;
 import com.hippo.yatnmb.widget.ContentLayout;
@@ -144,6 +146,9 @@ public class PostFragment extends BaseFragment
 
     private Callback mCallback;
 
+    private boolean isIgnoredPost;
+    private boolean isLoaded;
+
     public void setCallback(Callback callback) {
         mCallback = callback;
     }
@@ -189,8 +194,6 @@ public class PostFragment extends BaseFragment
 
         return false;
     }
-
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -269,6 +272,9 @@ public class PostFragment extends BaseFragment
 
         Messenger.getInstance().register(Constants.MESSENGER_ID_REPLY, this);
         Messenger.getInstance().register(Constants.MESSENGER_ID_FAST_SCROLLER, this);
+
+        isIgnoredPost = false;
+        isLoaded = false;
 
         return view;
     }
@@ -360,6 +366,9 @@ public class PostFragment extends BaseFragment
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+        if (isIgnoredPost || !isLoaded)
+            return true;
+
         switch (item.getItemId()) {
             case R.id.action_go_to:
                 int pages = mReplyHelper.getPages();
@@ -614,6 +623,18 @@ public class PostFragment extends BaseFragment
                         startActivity(intent);
                     }
                 });
+            }
+
+            // FIXME: Need getting rid of unwanted requests (ex: post image thumbnail)
+            if (PostIgnoreUtils.INSTANCE.checkPostIgnored(postId)) {
+                mLeftText.setText("");
+                mCenterText.setText("No.9999999");
+                mRightText.setText(R.string.from_the_future);
+                mThumb.setVisibility(View.GONE);
+                mThumb.unload();
+                mContent.setText(R.string.ignore_post_message);
+                mButton.setVisibility(View.GONE);
+                mButton.setOnClickListener(null);
             }
 
             mRequest = null;
@@ -944,6 +965,12 @@ public class PostFragment extends BaseFragment
                 request.setCallback(new GetPostIdFromReferenceListener());
                 mNMBClient.execute(request);
             } else {
+                if (PostIgnoreUtils.INSTANCE.checkPostIgnored(mId)) {
+                    isIgnoredPost = true;
+                    mReplyHelper.showText(getString(R.string.ignore_post_message));
+                    return;
+                }
+
                 NMBRequest request = new NMBRequest();
                 mNMBRequest = request;
                 request.setSite(mSite);
@@ -959,6 +986,12 @@ public class PostFragment extends BaseFragment
 
         @Override
         public void onSuccess(ACReference result) {
+            if (PostIgnoreUtils.INSTANCE.checkPostIgnored(result.postId)) {
+                isIgnoredPost = true;
+                mReplyHelper.showText(getString(R.string.ignore_post_message));
+                return;
+            }
+
             mReplyId = null;
             mId = result.postId;
             mToolbar.setTitle(mSite.getPostTitle(getContext(), mId));
@@ -1043,6 +1076,8 @@ public class PostFragment extends BaseFragment
                         mReplyHelper.setPages(Integer.MAX_VALUE); // Keep going
                     }
                 }
+
+                isLoaded = true;
             }
             // Clear
             mRequest = null;
@@ -1057,6 +1092,8 @@ public class PostFragment extends BaseFragment
                 mNMBRequest = null;
 
                 mReplyHelper.onGetExpection(mTaskId, e);
+
+                isLoaded = false;
             }
             // Clear
             mRequest = null;
@@ -1069,6 +1106,8 @@ public class PostFragment extends BaseFragment
 
                 // Clear
                 mNMBRequest = null;
+
+                isLoaded = false;
             }
             // Clear
             mRequest = null;

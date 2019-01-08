@@ -103,7 +103,9 @@
     <string name="ignore_post">永久屏蔽此串</string>
 
     <string name="ignore_post_confirm_title">你確定要屏蔽此串嗎？</string>
-    <string name="ignore_post_confirm_message">今後你只能通過輸入此串串號進入</string>
+    <string name="ignore_post_confirm_message">今後除非你通過設置取消屏蔽所有串，否則將無法再次訪問</string>
+
+    <string name="ignore_post_message">此串已被你屏蔽</string>
 
     <string name="comment_copied_clipboard">評論文字已複製到剪貼板</string>
 

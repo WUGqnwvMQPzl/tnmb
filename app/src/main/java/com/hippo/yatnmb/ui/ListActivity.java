@@ -1350,12 +1350,10 @@ public final class ListActivity extends AbsActivity
                     while (postIterator.hasNext()) {
                         Post post = postIterator.next();
 
-                        //Log.d("postdump", post.toString());
-
                         if (PostIgnoreUtils.INSTANCE.checkPostIgnored(post.getNMBPostId())) {
                             // old behavior
-                            // postIterator.remove();
-                            postIterator.set(PostIgnoreUtils.generateIgnoredPost());
+                            postIterator.remove();
+                            //postIterator.set(PostIgnoreUtils.generateIgnoredPost());
                         }
                     }
 

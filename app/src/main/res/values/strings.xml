@@ -103,7 +103,9 @@
     <string name="ignore_post">Ignore this post</string>
 
     <string name="ignore_post_confirm_title">Are you sure want to ignore this post?</string>
-    <string name="ignore_post_confirm_message">After ignored, you can access it from enter post id only.</string>
+    <string name="ignore_post_confirm_message">After ignored, you can\'t access these posts unless you restored all ignored posts.</string>
+
+    <string name="ignore_post_message">This post has been ignored</string>
 
     <string name="comment_copied_clipboard">Copied to clipboard</string>
 
