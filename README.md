@@ -1,39 +1,7 @@
-# Nimingban
+# Yet another tnmb
+這是基於[紫島](https://github.com/seven332/Nimingban)的復刻，針對備胎島而設。
 
-![Icon](art/launcher_icon-web.png)
-
-这是一个匿名版客户端，现在你可以用它上 [A 岛](http://h.nimingban.com/Forum)
-
-An imageboard or textboard client. [AC Nimingban](http://h.nimingban.com/Forum) is supported now.
-
-
-# Screenshot
-
-![screenshot-00](art/screenshot-00.png)
-
-![screenshot-01](art/screenshot-01.png)
-
-
-# Build
-
-Windows
-
-    > git clone https://github.com/seven332/Nimingban
-    > cd Nimingban
-    > git submodule update --init
-    > gradlew app:assembleDebug
-
-Linux
-
-    $ git clone https://github.com/seven332/Nimingban
-    $ cd Nimingban
-    $ git submodule update --init
-    $ ./gradlew app:assembleDebug
-
-生成的 apk 文件在 app\build\outputs\apk 目录下
-
-The apk is in app\build\outputs\apk
-
+![](art/screenshot-new.png)
 
 # Thanks
 
