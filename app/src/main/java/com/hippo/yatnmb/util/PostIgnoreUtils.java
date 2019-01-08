@@ -1,5 +1,9 @@
 package com.hippo.yatnmb.util;
 
+import com.hippo.yatnmb.client.ac.data.ACPost;
+import com.hippo.yatnmb.client.data.ACSite;
+import com.hippo.yatnmb.client.data.Post;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -42,6 +46,20 @@ public class PostIgnoreUtils {
         }
 
         return flag;
+    }
+
+    public static Post generateIgnoredPost() {
+        ACPost post = new ACPost();
+        post.id = "9999999";
+        post.userid = "周镜虾";
+        post.admin = "1";
+        post.content = "[AD]酸奶or坚果你喜欢哪种(　^ω^)";
+        post.now = "2038年01月19日(四)11:14:07";
+        post.replyCount = "0";
+        post.title = "广告";
+        post.generateSelfAndReplies(ACSite.getInstance());
+        post.setIgnoreMark(true);
+        return post;
     }
 
     private void writeToSettings() {

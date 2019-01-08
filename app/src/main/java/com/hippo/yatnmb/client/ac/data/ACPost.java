@@ -81,6 +81,7 @@ public class ACPost extends Post {
     private String mThumbUrl;
     private String mImageUrl;
     private Reply[] mReplies;
+    private boolean ignoreMark;
 
     @Override
     public String toString() {
@@ -230,6 +231,14 @@ public class ACPost extends Post {
     @Override
     public Reply[] getNMBReplies() {
         return mReplies;
+    }
+
+    public boolean getIgnoreMark() {
+        return ignoreMark;
+    }
+
+    public void setIgnoreMark(boolean flag) {
+        ignoreMark = flag;
     }
 
     @Override

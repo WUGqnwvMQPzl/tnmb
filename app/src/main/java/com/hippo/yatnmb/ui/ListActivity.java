@@ -70,6 +70,7 @@ import com.hippo.yatnmb.client.NMBRequest;
 import com.hippo.yatnmb.client.Notice;
 import com.hippo.yatnmb.client.UpdateHelper;
 import com.hippo.yatnmb.client.ac.ACUrl;
+import com.hippo.yatnmb.client.ac.data.ACPost;
 import com.hippo.yatnmb.client.data.ACSite;
 import com.hippo.yatnmb.client.data.CommonPost;
 import com.hippo.yatnmb.client.data.DisplayForum;
@@ -116,6 +117,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
@@ -414,6 +416,9 @@ public final class ListActivity extends AbsActivity
 
     private void showIgnorePostDialog(final int position) {
         final Post post = mPostHelper.getDataAt(position);
+
+        // Disable menu for ignored posts
+        if (post instanceof ACPost && ((ACPost) post).getIgnoreMark()) return;
 
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             @Override
@@ -1326,11 +1331,17 @@ public final class ListActivity extends AbsActivity
                     mPostHelper.onGetEmptyData(mTaskId);
                 } else {
                     // Remove ignored posts
-                    Iterator<Post> postIterator = result.iterator();
+                    ListIterator<Post> postIterator = result.listIterator();
                     while (postIterator.hasNext()) {
                         Post post = postIterator.next();
-                        if (PostIgnoreUtils.INSTANCE.checkPostIgnored(post.getNMBPostId()))
-                            postIterator.remove();
+
+                        //Log.d("postdump", post.toString());
+
+                        if (PostIgnoreUtils.INSTANCE.checkPostIgnored(post.getNMBPostId())) {
+                            // old behavior
+                            // postIterator.remove();
+                            postIterator.set(PostIgnoreUtils.generateIgnoredPost());
+                        }
                     }
 
                     mPostHelper.setPages(Integer.MAX_VALUE);
