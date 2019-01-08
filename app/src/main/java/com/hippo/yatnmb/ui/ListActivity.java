@@ -145,6 +145,7 @@ public final class ListActivity extends AbsActivity
     private ActionBarDrawerToggle mDrawerToggle;
 
     private MenuItem mRule;
+    private MenuItem mNotice;
     private MenuItem mCreatePost;
     private MenuItem mSortForumsMenu;
 
@@ -232,6 +233,7 @@ public final class ListActivity extends AbsActivity
                 }
                 if (mRightDrawer == view) {
                     setMenuItemVisible(mRule, true);
+                    setMenuItemVisible(mNotice, true);
                     setMenuItemVisible(mCreatePost, true);
                     setMenuItemVisible(mSortForumsMenu, false);
                 }
@@ -244,6 +246,7 @@ public final class ListActivity extends AbsActivity
                 }
                 if (mRightDrawer == view) {
                     setMenuItemVisible(mRule, false);
+                    setMenuItemVisible(mNotice, false);
                     setMenuItemVisible(mCreatePost, false);
                     setMenuItemVisible(mSortForumsMenu, true);
                 }
@@ -644,7 +647,11 @@ public final class ListActivity extends AbsActivity
         mNMBClient.execute(request);
 
         // Get Notice
-        request = new NMBRequest();
+        getNotice(false);
+    }
+
+    private void getNotice(final boolean forceDisplay) {
+        NMBRequest request = new NMBRequest();
         mNoticeRequest = request;
         request.setSite(ACSite.getInstance());
         request.setMethod(NMBClient.METHOD_NOTICE);
@@ -661,21 +668,22 @@ public final class ListActivity extends AbsActivity
                 }
                 long oldDate = Settings.getNoticeDate();
                 final long newDate = result.date;
-                if (newDate <= oldDate) {
+                if (newDate <= oldDate && !forceDisplay) {
                     return;
                 }
 
                 final CheckBoxDialogBuilder builder = new CheckBoxDialogBuilder(
-                        ListActivity.this, Html.fromHtml(result.content), getString(R.string.get_it), false);
+                        ListActivity.this, Html.fromHtml(result.content), getString(R.string.get_it),
+                        !forceDisplay, false);
                 Dialog dialog = builder.setTitle(R.string.notice).setOnDismissListener(
                         new DialogInterface.OnDismissListener() {
                             @Override
                             public void onDismiss(DialogInterface dialog) {
-                                if (builder.isChecked()) {
+                                if (builder.isShowCheckbox() && builder.isChecked()) {
                                     Settings.putNoticeDate(newDate);
                                 }
                             }
-                }).setPositiveButton(android.R.string.ok, null).show();
+                        }).setPositiveButton(android.R.string.ok, null).show();
                 ((TextView) dialog.findViewById(R.id.message)).setMovementMethod(
                         new LinkMovementMethod2(ListActivity.this));
             }
@@ -802,15 +810,18 @@ public final class ListActivity extends AbsActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_list, menu);
         mRule = menu.findItem(R.id.action_rule);
+        mNotice = menu.findItem(R.id.action_notice);
         mCreatePost = menu.findItem(R.id.action_create_post);
         mSortForumsMenu = menu.findItem(R.id.action_sort_forums);
 
         if (mDrawerLayout.isDrawerOpen(Gravity.RIGHT)) {
             mRule.setVisible(false);
+            mNotice.setVisible(false);
             mCreatePost.setVisible(false);
             mSortForumsMenu.setVisible(true);
         } else {
             mRule.setVisible(true);
+            mNotice.setVisible(true);
             mCreatePost.setVisible(true);
             mSortForumsMenu.setVisible(false);
         }
@@ -880,6 +891,10 @@ public final class ListActivity extends AbsActivity
                     tv.setMovementMethod(new LinkMovementMethod2(ListActivity.this));
                     new AlertDialog.Builder(this).setTitle(R.string.rule).setView(view).show();
                 }
+                return true;
+            case R.id.action_notice:
+                if (mCurrentForum != null)
+                    getNotice(true);
                 return true;
             case R.id.action_create_post:
                 if (mCurrentForum != null) {
