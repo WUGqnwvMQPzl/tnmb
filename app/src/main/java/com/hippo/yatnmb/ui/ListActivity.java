@@ -429,7 +429,7 @@ public final class ListActivity extends AbsActivity
                 switch (i) {
                     case 0:
                         Intent intent = new Intent(ListActivity.this, TypeSendActivity.class);
-                        intent.setAction(TypeSendActivity.ACTION_CREATE_POST);
+                        intent.setAction(TypeSendActivity.ACTION_REPORT);
                         intent.putExtra(TypeSendActivity.KEY_SITE, mCurrentForum.getNMBSite().getId());
                         intent.putExtra(TypeSendActivity.KEY_ID, mCurrentForum.getNMBSite().getReportForumId());
                         intent.putExtra(TypeSendActivity.KEY_TEXT, ">>No." + post.getNMBPostId() + "\n");

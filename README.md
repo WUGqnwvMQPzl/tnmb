@@ -1,4 +1,4 @@
-# Yet another tnmb
+# ![](src/main/res/mipmap-xhdpi/ic_launcher.png) Yet another tnmb
 這是基於[紫島](https://github.com/seven332/Nimingban)的復刻，針對備胎島而設。
 
 ## 截圖
@@ -48,6 +48,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 
-ic_launcher 图标为 Hippo Seven 所有，所有权利保留
+本項目之修改以及新圖標由 WUGqnwvMQPzl 所有，新啓動器圖標基於 Hippo Seven 之版本
+
+ic_launcher（在此項目中爲 ic_launcher_old）图标为 Hippo Seven 所有，所有权利保留
 
 ic_launcher_ibuki 图标为 ibuki 所有，如需使用请注明出处与作者
