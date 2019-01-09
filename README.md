@@ -1,14 +1,20 @@
-# ![](src/main/res/mipmap-xhdpi/ic_launcher.png) Yet another tnmb
+<img align="right" src="https://github.com/WUGqnwvMQPzl/tnmb/raw/master/app/src/main/res/mipmap-xxhdpi/ic_launcher.png">
+
+# Yet another tnmb
 這是基於[紫島](https://github.com/seven332/Nimingban)的復刻，針對備胎島而設。
 
 ## 截圖
-![](art/screenshot-new.png)
+![](art/screenshot-new-00.png)|![](art/screenshot-new-01.png)|![](art/screenshot-new-02.png)
+---|---|---
 
 ## 附加特性
 - 更嚴厲的屏蔽串功能：屏蔽串之後將無法通過引用、人工輸入串號等方法訪問 (Commit: 43e9640cc6e6c42cfc46a483b5f562912b8c3d7b)
 - 更好的跳頁功能：不用繼續拖滾動條，可手動輸入頁碼號精準跳頁 (Commit: b02addef5eab1c44391f5ffca12b7a9baeec2309)
 - 隨時瀏覽最新公告：如果不小心忽略了某次公告，可在主介面的菜單中重新打開 (Commit: 1153825788e406fa5f20bf9d9192448a9e0df105)
 - 避免與現有紫島混淆，調整了介面主題色 (Commit: 08e8ac509b52d9014daf03b7b457cff40dbfd41f)
+  - 與此同時，提供了符合目前介面主題色的自適應圖標 (Commit: 59350e39d7b7224d7431feafe33294149b2f73b0)
+
+*附加特性可能會隨緣提交到上游，將功能帶到針對ATM島的紫島客戶端。*
 
 ## 感謝
 感謝 Hippo Seven 開發了紫島客戶端，以及下列開源項目：
