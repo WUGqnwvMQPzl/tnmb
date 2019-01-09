@@ -1,13 +1,17 @@
 # Yet another tnmb
 這是基於[紫島](https://github.com/seven332/Nimingban)的復刻，針對備胎島而設。
 
+## 截圖
 ![](art/screenshot-new.png)
 
-# Thanks
+## 附加特性
+- 更嚴厲的屏蔽串功能：屏蔽串之後將無法通過引用、人工輸入串號等方法訪問 (Commit: 43e9640cc6e6c42cfc46a483b5f562912b8c3d7b)
+- 更好的跳頁功能：不用繼續拖滾動條，可手動輸入頁碼號精準跳頁 (Commit: b02addef5eab1c44391f5ffca12b7a9baeec2309)
+- 隨時瀏覽最新公告：如果不小心忽略了某次公告，可在主介面的菜單中重新打開 (Commit: 1153825788e406fa5f20bf9d9192448a9e0df105)
+- 避免與現有紫島混淆，調整了介面主題色 (Commit: 08e8ac509b52d9014daf03b7b457cff40dbfd41f)
 
-本项目受到了诸多开源项目的帮助
-
-Here is the libraries
+## 感謝
+感謝 Hippo Seven 開發了紫島客戶端，以及下列開源項目：
 
 - [AOSP](http://source.android.com/)
 - [android-advancedrecyclerview](https://github.com/h6ah4i/android-advancedrecyclerview)
@@ -28,7 +32,7 @@ Here is the libraries
 - [SwipeBackLayout](https://github.com/ikew0ng/SwipeBackLayout)
 
 
-# License
+## 版權訊息
 
     Copyright (C) 2015 Hippo Seven
 
