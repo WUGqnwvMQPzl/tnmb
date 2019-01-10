@@ -45,9 +45,11 @@ import android.text.style.StyleSpan;
 import android.text.style.URLSpan;
 import android.util.Log;
 import android.util.Pair;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -56,6 +58,8 @@ import android.widget.Toast;
 
 import com.hippo.easyrecyclerview.EasyRecyclerView;
 import com.hippo.effect.ViewTransition;
+import com.hippo.view.SimpleDoubleTapListener;
+import com.hippo.view.SimpleGestureListener;
 import com.hippo.yatnmb.Constants;
 import com.hippo.yatnmb.NMBApplication;
 import com.hippo.yatnmb.R;
@@ -237,6 +241,21 @@ public class PostFragment extends BaseFragment
         });
         mToolbar.inflateMenu(R.menu.activity_post);
         mToolbar.setOnMenuItemClickListener(this);
+        final GestureDetector gestureDetector = new GestureDetector(getContext(), new SimpleGestureListener());
+        gestureDetector.setOnDoubleTapListener(new SimpleDoubleTapListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                mReplyHelper.refresh();
+                return true;
+            }
+        });
+        mToolbar.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                gestureDetector.onTouchEvent(event);
+                return true;
+            }
+        });
 
         mContentLayout = (ContentLayout) contentView.findViewById(R.id.content_layout);
         mRecyclerView = mContentLayout.getRecyclerView();
