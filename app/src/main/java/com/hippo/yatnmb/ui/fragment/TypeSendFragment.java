@@ -33,6 +33,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
+import android.support.v13.view.inputmethod.InputConnectionCompat;
+import android.support.v13.view.inputmethod.InputContentInfoCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -332,6 +334,37 @@ public final class TypeSendFragment extends BaseFragment implements View.OnClick
         }
         mEditText.requestFocus();
         mEditText.requestFocusFromTouch();
+        mEditText.setCommitContentCallback(new NMBEditText.CommitContentCallback() {
+            @Override
+            public boolean processInputConnection(InputContentInfoCompat inputContentInfo, int flags, Bundle opts) {
+                /* FIXME: some image from image keyboard (eg: gboard) reports "illegal image" from server
+                 *        Maybe the problem is from server backend, it'll won't be fixed D:
+                 */
+                boolean supported = false;
+                for (String mime : NMBEditText.IMAGE_MIME) {
+                    if (inputContentInfo.getDescription().hasMimeType(mime)) {
+                        supported = true;
+                        break;
+                    }
+                }
+
+                if (!supported)
+                    return false;
+
+                if ((flags & InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION) != 0) {
+                    try {
+                        inputContentInfo.requestPermission();
+                    } catch (Exception e) {
+                        Log.e(TAG, "InputContentInfoCompat#requestPermission() failed.", e);
+                        return false;
+                    }
+                }
+
+                handleSelectedImageUri(inputContentInfo.getContentUri());
+                inputContentInfo.releasePermission();
+                return true;
+            }
+        });
 
         // Show ime
         SimpleHandler.getInstance().postDelayed(new Runnable() {

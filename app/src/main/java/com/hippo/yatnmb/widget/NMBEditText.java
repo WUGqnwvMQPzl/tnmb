@@ -20,14 +20,25 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Bundle;
+import android.support.v13.view.inputmethod.EditorInfoCompat;
+import android.support.v13.view.inputmethod.InputConnectionCompat;
+import android.support.v13.view.inputmethod.InputContentInfoCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 
 import com.hippo.yatnmb.util.Settings;
 
 public class NMBEditText extends AppCompatEditText {
 
     private Typeface mOriginalTypeface;
+    private CommitContentCallback mCommitContentCallback;
+
+    public static final String[] IMAGE_MIME = new String[] {
+            "image/png", "image/gif", "image/jpeg"
+    };
 
     public NMBEditText(Context context) {
         super(context);
@@ -67,6 +78,10 @@ public class NMBEditText extends AppCompatEditText {
         setTypeface(mOriginalTypeface);
     }
 
+    public void setCommitContentCallback(CommitContentCallback callback) {
+        mCommitContentCallback = callback;
+    }
+
     @Override
     public boolean onTextContextMenuItem(int id) {
         // Get text in clipboard
@@ -83,5 +98,23 @@ public class NMBEditText extends AppCompatEditText {
         }
 
         return super.onTextContextMenuItem(id);
+    }
+
+    @Override
+    public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
+        final InputConnection ic = super.onCreateInputConnection(outAttrs);
+        EditorInfoCompat.setContentMimeTypes(outAttrs, IMAGE_MIME);
+        final InputConnectionCompat.OnCommitContentListener callback = new InputConnectionCompat.OnCommitContentListener() {
+            @Override
+            public boolean onCommitContent(InputContentInfoCompat inputContentInfo, int flags, Bundle opts) {
+                if (mCommitContentCallback == null) return false;
+                return mCommitContentCallback.processInputConnection(inputContentInfo, flags, opts);
+            }
+        };
+        return InputConnectionCompat.createWrapper(ic, outAttrs, callback);
+    }
+
+    public interface CommitContentCallback {
+        boolean processInputConnection(InputContentInfoCompat inputContentInfo, int flags, Bundle opts);
     }
 }
